@@ -1,0 +1,1 @@
+The Big O analysis of the makeEmpty() function would be O(n) because the function recursively calls itself for each node inside the tree. 

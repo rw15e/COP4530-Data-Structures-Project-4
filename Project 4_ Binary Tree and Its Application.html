@@ -1,0 +1,283 @@
+
+<!-- saved from url=(0049)http://www.cs.fsu.edu/~myers/cop4530/hw/hw04.html -->
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<meta name="Generator" content="Microsoft FrontPage 12.0">
+<title>Project 4: Binary Tree and Its Application</title>
+<style type="text/css">
+
+  tt {font-family:Courier New, Fixedsys; font size = 11pt}
+  p  {font-family:Ariel, sans-serif; font size = 10pt}
+  h1 {font-family:Ariel, sans-serif; font size = 12pt; font-weight = bold}
+  h2 {font-family:Ariel, sans-serif; font size = 10pt; font-weight = bold}
+  ul {font-family:Ariel, sans-serif; font size = 10pt}
+  li {font-family:Ariel, sans-serif; font size = 10pt}
+
+</style>
+</head>
+<body>
+
+<center>
+<h1>Project 4: Binary Tree and Its Application</h1>
+</center>
+
+<center><h2>Due: Wed, Nov 8 </h2></center>
+
+<p>
+<strong>Educational Objectives:</strong>
+
+Gain experience with a binary tree and its application in converting 
+postfix expressions into infix expressions, as well as practice with 
+developing recursive algorithms.
+
+</p>
+
+<p>
+<strong>Task:</strong>
+
+Implement a binary expression tree and use the tree to convert postfix
+expressions into infix expressions
+</p>
+
+
+<h2>Project Requirements:</h2>
+
+<p>In this project, you are asked to develop a binary expression tree
+and use the tree to convert postfix expressions into infix expressions. 
+In this project, a postfix expression may contain 4 types of operators:
+multiplication (*), division (/), plus (+), and minus (-). We assume
+that multiplication and division have the same precedence, plus and
+minus have the same precedence, and multiplication and division
+have higher precedence than plus and minus. All operators are 
+left-associative (i.e. associate left-to-right).</p>
+
+
+<p><strong>Binary Expression Tree:</strong>. 
+
+Build a binary expression tree class called "BET". Your BET class must 
+have a
+nested structure named "BinaryNode" to contain the node-related
+information (including, e.g., element and pointers to the children
+nodes). In addition, BET must at least support the following interface 
+functions: 
+
+</p><ul><p>Public interface</p>
+<li> <b>BET()</b>: default zero-parameter constructor. Builds an empty 
+tree.</li>
+
+<li> <b>BET(const string&amp; postfix)</b>: one-parameter constructor, where
+parameter "postfix" is string containing a postfix expression. The tree
+should be built based on the postfix expression. Tokens in the postfix
+expression are separated by spaces.</li>
+
+<li><b>BET(const BET&amp;)</b>: copy constructor -- makes appropriate deep 
+copy of the tree</li>
+
+<li><b>~BET()</b>: destructor -- cleans up all dynamic space in the 
+tree</li>
+
+<li><b>bool buildFromPostfix(const string&amp; postfix)</b>: parameter
+"postfix" is string containing a postfix expression. The tree should be
+built based on the postfix expression. Tokens in the postfix expression
+are separated by spaces. If the tree contains nodes before the function
+is called, you need to first delete the existing nodes. Return true if
+the new tree is built successfully. Return false if an error is 
+encountered.</li>
+
+<li><b>const BET &amp; operator= (const BET &amp;)</b>: assignment operator -- 
+makes appropriate deep copy</li>
+
+<li><b>void printInfixExpression()</b>: Print out the infix expression. 
+Should do this by making use of the private (recursive) version</li>
+ 
+<li><strong>void printPostfixExpression()</strong>: Print the postfix 
+form of the expression. Use the private recursive function to help</li>
+
+<li><strong>size_t size()</strong>:
+Return the number of nodes in the tree (using the private recursive 
+function)</li>
+
+<li><strong>size_t leaf_nodes()</strong>: 
+Return the number of leaf nodes in the tree. (Use the private recursive 
+function to help)</li>
+
+<li><b>bool empty()</b>: return true if the tree is empty. Return false 
+otherwise.</li>
+
+</ul>
+
+<ul><p>Private helper functions 
+(all the required private member functions must be implemented recursively):</p>
+
+<li><b>void printInfixExpression(BinaryNode *n)</b>: print to the
+standard output the corresponding infix expression. Note that you may
+need to add parentheses depending on the precedence of operators. You
+should not have unnecessary parentheses.</li>
+
+<li><b>void makeEmpty(BinaryNode* &amp;t)</b>: delete all nodes in the 
+subtree pointed to by t.</li>
+
+<li><b>BinaryNode * clone(BinaryNode *t)</b>: clone all nodes in
+the subtree pointed to by t. Can be called by functions such as the 
+assignment operator=.</li>
+ 
+<li><strong>void printPostfixExpression(BinaryNode *n):</strong> 
+print to the standard output the corresponding postfix 
+expression.</li>
+
+<li><strong>size_t size(BinaryNode *t)</strong>: 
+return the number of nodes in the subtree pointed to by t.</li>
+
+
+<li><strong>size_t leaf_nodes(BinaryNode *t)</strong>: return the 
+number of leaf nodes in the subtree pointed to by t.</li>
+
+<p>Make sure to declare as <tt>const</tt> member functions any for which 
+this is appropriate
+
+</p></ul>
+
+<p><strong>Conversion to Infix Expression:</strong>. 
+
+To convert a postfix expression into an infix expression using a binary
+expression tree involves two steps. First, build a binary expression
+tree from the postfix expression. Second, print the nodes of the
+binary expression tree using an inorder traversal of the tree. </p>
+
+<p>The basic operation of building a binary expression tree from a 
+postfix expression is similar to that of evaluating postfix expression. 
+
+<!--They both involve the use of stack to hold intermediate results. 
+When 
+you encounter an operand, you create a node to contain the operand and 
+push it into a stack. When you encounter an operator, you pop out the 
+corresponding operands from the stack, and build a new tree, and then 
+push the new tree into the stack. After you have processed all tokens in 
+the postfix expression, the stack has the binary expression tree.
+-->
+
+Refer to Section 4.2.2 for the basic process of building a binary 
+expression tree from a postfix expression.</p>
+
+<p>Note that during the conversion from postfix to infix expression, 
+parentheses may need to be added to ensure that the infix expression has 
+the same value (and the same evaluation order) as the corresponding 
+postfix expression. Your result should not add unnecessary parentheses. 
+Tokens in an infix expression should also be separated by a space. The 
+following are a few examples of postfix expressions and the 
+corresponding infix expressions.</p>
+
+<table border="1" width="100%">
+  <tbody><tr>
+    <td width="50%">postfix expression</td>
+    <td width="50%">infix expression</td>
+  </tr>
+  <tr>
+    <td width="50%">4 50 6 + +</td>
+    <td width="50%">4 + ( 50 + 6 )</td>
+  </tr>
+  <tr>
+    <td width="50%">4 50 + 6 +</td>
+    <td width="50%">4 + 50 + 6</td>
+  </tr>
+  <tr>
+    <td width="50%">4 50 + 6 2 * +</td>
+    <td width="50%">4 + 50 + 6 * 2</td>
+  </tr>
+  <tr>
+    <td width="50%">4 50 6 + + 2 *</td>
+    <td width="50%">( 4 + ( 50 + 6 ) ) * 2</td>
+  </tr>
+<tr>
+	<td width="50%">a b + c d e + * *</td>
+	<td width="50%">( a + b ) * ( c * ( d + e ) )</td>
+</tr>
+</tbody></table>
+&nbsp;
+
+<p><strong>Other Requirements</strong>:</p>
+<ul>
+	<li>Analyze the worst-case time complexity of the private member function
+	<strong>makeEmpty(BinaryNode* &amp; t)</strong> of the binary expression tree. 
+	Give the complexity in the form of Big-O. Your analysis can be informal; 
+	however, it must be clearly understandable by others. Name the file 
+	containing the complexity analysis as "analysis.txt". </li>
+	<li>You can use any C++/STL containers and algorithms</li>
+	<li>If you need to use any containers, you must use the ones provided in 
+	C++/STL. Do not use the ones you developed in the previous projects.</li>
+
+	<li>Create a makefile that will compile the provided driver 
+        program (see below) with your class, into an executable called 
+        "proj4.x"</li>
+<!--
+	<li><font face="Arial">Your program MUST 
+	re-prompt the user for the next infix expression. Your program must be able 
+	to process several inputs before terminating.</font></li>
+-->
+	<li>
+	<p class="style8">Your program MUST check invalid postfix expressions and 
+	report errors. We consider the following types of postfix expressions as 
+	invalid expressions: 1) an operator does not have the corresponding 
+	operands, 2) an operand does not have the corresponding operator. Note that 
+	an expression containing only a single operand is a valid expression (for 
+	example, "6"). In all other cases, an operand needs to have an operator.&nbsp;</p>
+	</li>
+</ul>
+<p>Here is a driver program -- <a href="http://www.cs.fsu.edu/~myers/cop4530/hw/hw4files/proj4_driver.cpp">proj4_driver.cpp</a> -- to test the BET 
+implementation. It accepts input from terminal,
+or the input is redirected from a file that contains the postfix
+expressions to be converted. Each line in the file (or typed by user)
+represents a postfix expression. We assume that the tokens in a postfix
+expression are separated by space.  You can run out version of this 
+driver program on linprog.cs.fsu.edu with this command:
+</p><pre>   ~myers/dsprog/proj4.x
+</pre>
+<p></p> 
+
+<!--
+<p><strong>Provided Code</strong>
+
+<p> 
+<ol>
+<li><a href="h4files/proj4_driver.cpp">proj4_driver.cpp</a> -- provided 
+driver program</li>
+</ol>
+-->
+
+<br>
+<p style="text-align: justify;"><strong>Note -- ASSESSMENT for ABET requirements</strong></p>
+<p style="text-align: justify;" class="style7">This is our second capstone
+assignment (for the required ABET assessment). Make sure you do well for this
+project -- as discussed at the beginning of the course, students must
+pass the designated ABET assessment outcomes to complete the course.
+Portions of this assignment (including your tree implementation and
+usage of the tree) will be used for the ABET outcome that verifies
+that students are able to effectively use recursive functions
+</p>
+<br>
+
+
+
+<p><strong>Submitting</strong> 
+
+</p><p>Tar up all of your C++ source files and header files that you 
+develop for this project, as well as the makefile and the analysis.txt 
+file into one tar archive, and submit online via Blackboard,in the 
+"Assignments" section.  Use the Assignment 4 link to submit.  Make sure 
+to tar your files correctly.</p>
+
+<p>Your tar file should be named in this format, all 
+lowercase:
+</p><pre>        <i>lastname</i>_<i>firstname</i>_p4.tar
+
+        Example:  My tar file would be:     <b>myers_bob_p4.tar</b>
+</pre>
+<p></p>
+
+
+
+
+
+
+
+</body></html>
